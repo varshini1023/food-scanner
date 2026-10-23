@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Scanner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f7f8f5;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: #4caf50;
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 70px 20px 50px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .scan-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Feature cards */
+        .features {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Protein section */
+        .protein-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 40px 20px;
+        }
+
+        .protein-section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .protein-section > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .protein-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .food {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: white;
+            color: #777;
+            margin-top: 30px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .protein-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍽️ Food Scanner</div>
+
+        <a href="/login" class="login-btn">Login</a>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <h1>Know Your Food Better</h1>
+
+        <p>
+            Scan South Indian foods, understand their nutrition,
+            and make better food choices.
+        </p>
+
+        <a href="/scan" class="scan-btn">
+            📷 Scan Food
+        </a>
+
+    </section>
+
+
+    <!-- Main Features -->
+    <section class="features">
+
+        <h2>Explore Our Features</h2>
+
+        <div class="card-container">
+
+            <!-- BMI -->
+            <div class="card">
+
+                <div class="icon">⚖️</div>
+
+                <h3>BMI & Suggestions</h3>
+
+                <p>
+                    Calculate your BMI and get general
+                    food and lifestyle suggestions.
+                </p>
+
+                <a href="/bmi">
+                    Calculate BMI →
+                </a>
+                <!-- Healthy Choices -->
+         <div class="card">
+
+            <div class="icon">🌱</div>
+
+             <h3>Healthy Choices</h3>
+
+         <p>
+             Discover simple ways to make everyday meals
+            more balanced and learn how exercise benefits you.
+         </p>
+
+             <a href="/healthy-choices">
+                 Explore Healthy Choices →
+             </a>
+
+</div>
+
+            </div>
+
+
+            <!-- Protein -->
+            <div class="card">
+
+                <div class="icon">🥗</div>
+
+                <h3>Protein-Rich Foods</h3>
+
+                <p>
+                    Discover protein-rich foods commonly
+                    available in South India.
+                </p>
+
+                <a href="/protein-foods">
+                    Explore Foods →
+                </a>
+               
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Protein Foods Preview -->
+    <section class="protein-section">
+
+        <h2>Protein-Rich Foods in South India</h2>
+
+        <p>
+            Simple, locally available sources of protein
+            for everyday meals.
+        </p>
+
+        <div class="protein-list">
+
+            <div class="food">🫘 Green Gram</div>
+            <div class="food">🫘 Bengal Gram</div>
+            <div class="food">🌱 Horse Gram</div>
+            <div class="food">🥜 Groundnuts</div>
+            <div class="food">🥛 Curd</div>
+            <div class="food">🥚 Eggs</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Food Scanner | Eat Smart, Stay Healthy</p>
+    </footer>
+
+</body>
+</html>
+```

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Scanner</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f4f7f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .scanner-box {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 40px 35px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 50px;
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin: 5px 0 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 2px dashed #a5c9a7;
+            background: #f8fbf7;
+            border-radius: 18px;
+            padding: 30px 20px;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+        }
+
+        .upload-text {
+            color: #555;
+            margin-bottom: 18px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            max-width: 350px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        #preview {
+            display: none;
+            width: 220px;
+            height: 170px;
+            object-fit: cover;
+            margin: 20px auto 10px;
+            border-radius: 14px;
+        }
+
+        #preview-text {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 25px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        .error-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #ffebee;
+            color: #c62828;
+            border-radius: 10px;
+        }
+
+        /* RESULT */
+
+        .result-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: #e8f5e9;
+            border-radius: 16px;
+        }
+
+        .result-image {
+            width: 220px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 15px;
+        }
+
+        .result-box h2 {
+            color: #2e7d32;
+            margin: 5px 0 10px;
+        }
+
+        .food-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1b5e20;
+            margin: 10px 0;
+        }
+
+        .confidence {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .nutrition {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #c8e6c9;
+        }
+
+        .nutrition h3 {
+            color: #2e7d32;
+        }
+
+        .nutrition p {
+            margin: 8px 0;
+            color: #444;
+        }
+        
+        .nutrition-note {
+              margin-top: 18px;
+              padding: 12px 15px;
+              background: #fff8e6;
+              border-left: 4px solid #e0a126;
+              border-radius: 6px;
+              color: #6b572c;
+              font-size: 13px;
+              line-height: 1.6;
+              text-align: left;
+        }
+
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="scanner-box">
+
+    <div class="icon">🍛</div>
+
+    <h1>Food Scanner</h1>
+
+    <p class="subtitle">
+        Upload a South Indian food image and let our
+        AI model identify it and show its nutritional information.
+    </p>
+
+
+    <!-- UPLOAD -->
+
+    <form
+        method="POST"
+        action="{{ url_for('scanner') }}"
+        enctype="multipart/form-data"
+    >
+
+        <div class="upload-area">
+
+            <div class="upload-icon">
+                📷
+            </div>
+
+            <p class="upload-text">
+                Select a food image to get started
+            </p>
+
+            <input
+                type="file"
+                name="food_image"
+                id="food_image"
+                accept="image/*"
+                required
+                onchange="showPreview(event)"
+            >
+
+            <img
+                id="preview"
+                alt="Food preview"
+            >
+
+            <p id="preview-text">
+                Image selected ✓
+            </p>
+
+        </div>
+
+
+        <button type="submit">
+            🔍 Scan Food
+        </button>
+
+    </form>
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <div class="error-box">
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- RESULT -->
+
+    {% if prediction %}
+
+    <div class="result-box">
+
+        {% if image_url %}
+
+        <img
+            src="{{ image_url }}"
+            alt="Scanned food"
+            class="result-image"
+        >
+
+        {% endif %}
+
+
+        <h2>
+            Predicted Food
+        </h2>
+
+
+        <div class="food-name">
+
+            {{ prediction }}
+
+        </div>
+
+
+        <div class="confidence">
+
+            Confidence:
+
+            <strong>
+                {{ confidence }}%
+            </strong>
+
+        </div>
+
+
+        <!-- NUTRITION -->
+
+        {% if nutrition %}
+
+        <div class="nutrition">
+
+            <h3>
+                Nutrition Information
+            </h3>
+            <p>
+                <strong>Serving Size:</strong>
+                {{ nutrition.serving_size }}
+            </p>
+
+
+            <p>
+                <strong>Calories:</strong>
+                {{ nutrition.calories }} kcal
+            </p>
+
+            <p>
+                <strong>Protein:</strong>
+                {{ nutrition.protein }} g
+            </p>
+
+            <p>
+                <strong>Carbohydrates:</strong>
+                {{ nutrition.carbs }} g
+            </p>
+
+            <p>
+                <strong>Fibre:</strong>
+                {{ nutrition.fiber }} g
+            </p>
+            <p class=""nutrition-note">
+            Nutritional values are estimates and may vary depending on ingredients,portion size,cooking method and 
+            preparation.Food identification may also be incorrect for some items.This tool
+            is intended for educational purpose and should not replace
+            professional dietary or medical advice
+           </p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- SUPPORTED FOODS -->
+
+   <p>
+        <strong>Currently supports:</strong>
+        Bisi Bele Bath • Chapati • Dosa • Idli • Gulab Jamun •
+        Momos • Pakoda • Poori • Upma
+    </p>
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="back-button"
+    >
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+
+<script>
+
+function showPreview(event) {
+
+    const file = event.target.files[0];
+
+    const preview =
+        document.getElementById("preview");
+
+    const previewText =
+        document.getElementById("preview-text");
+
+
+    if (file) {
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+        previewText.style.display =
+            "block";
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

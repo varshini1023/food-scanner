@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARKS | The Human Universe</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#f4f8f5;
+--panel:#ffffff;
+--text:#263b32;
+--muted:#687a70;
+--green:#267a50;
+--purple:#8c79c6;
+--blue:#6ba9c9;
+--border:#dce9df;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:radial-gradient(circle at top right,#e6e0fa 0%,#f4f8f5 42%,#e3f3e9 100%);
+color:var(--text);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background-image:radial-gradient(#8c79c6 1px,transparent 1px);
+background-size:45px 45px;
+opacity:.12;
+z-index:-1;
+}
+
+button,a{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+
+header{
+padding:24px 6%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.logo{
+font-size:32px;
+font-weight:900;
+letter-spacing:2px;
+color:var(--green);
+}
+
+.subtitle{color:var(--muted);font-size:13px;margin-top:4px}
+
+button{transition:transform .2s,border-color .2s}
+button:hover{transform:translateY(-2px)}
+
+.pill,.secondary{
+border:1px solid var(--border);
+border-radius:12px;
+background:white;
+color:var(--text);
+padding:11px 16px;
+}
+
+main{width:92%;max-width:1150px;margin:15px auto 55px}
+
+.hero{text-align:center;padding:25px 10px 30px}
+
+.eyebrow{
+font-size:11px;
+letter-spacing:3px;
+color:var(--green);
+font-weight:bold;
+margin-bottom:14px;
+}
+
+h1{
+font-size:clamp(31px,5vw,52px);
+line-height:1.12;
+margin-bottom:13px;
+}
+
+.hero p{
+color:var(--muted);
+line-height:1.7;
+max-width:620px;
+margin:auto;
+font-size:15px;
+}
+
+.categories{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin:25px 0 30px;
+}
+
+.category{
+border:1px solid var(--border);
+background:#ffffffc9;
+color:var(--text);
+padding:12px 17px;
+border-radius:15px;
+}
+
+.category.active{
+background:#e2f3e8;
+border-color:var(--green);
+color:var(--green);
+font-weight:bold;
+}
+
+.stage{
+display:grid;
+grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr);
+gap:18px;
+align-items:stretch;
+}
+
+.panel{
+background:#ffffffed;
+border:1px solid var(--border);
+border-radius:23px;
+padding:25px;
+box-shadow:0 10px 35px #294c3410;
+}
+
+.card-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-bottom:22px;
+}
+
+.label{
+font-size:11px;
+letter-spacing:2px;
+color:var(--green);
+font-weight:bold;
+}
+
+.fav{
+border:1px solid var(--border);
+background:#f5f1ff;
+border-radius:50%;
+width:42px;
+height:42px;
+font-size:21px;
+color:var(--purple);
+}
+
+.fav.saved{color:#d94b91;border-color:#d94b91}
+
+.icon{font-size:43px;margin-bottom:14px}
+
+.fact-title{
+font-size:clamp(25px,3vw,35px);
+line-height:1.2;
+margin-bottom:16px;
+}
+
+.fact-body{
+color:#58695f;
+font-size:15px;
+line-height:1.85;
+}
+
+.explain{
+margin-top:22px;
+background:#f0ebff;
+border-left:3px solid var(--purple);
+padding:15px;
+border-radius:9px;
+color:#50466f;
+font-size:14px;
+line-height:1.7;
+}
+
+.action-row{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:22px;
+}
+
+.primary{
+background:linear-gradient(100deg,#d6f4df,#dcecff);
+color:#244c36;
+border:1px solid #c2e4cd;
+padding:13px 18px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.primary:hover{filter:brightness(.98)}
+
+.side{display:flex;flex-direction:column;gap:16px}
+
+.side h2{font-size:19px;margin-bottom:14px}
+
+.side p{font-size:13px;color:var(--muted);line-height:1.7}
+
+.quiz-question{
+font-size:18px;
+line-height:1.5;
+margin-bottom:18px;
+}
+
+.quiz-options{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+.quiz-options button{
+padding:12px 8px;
+border-radius:10px;
+background:#f5f8f5;
+border:1px solid var(--border);
+color:var(--text);
+}
+
+.quiz-options button:hover{border-color:var(--green)}
+
+.quiz-options button:disabled{cursor:default;opacity:.7}
+
+.quiz-result{
+font-size:13px;
+line-height:1.7;
+margin-top:14px;
+color:var(--green);
+}
+
+.hidden{display:none!important}
+
+.section-title{margin:36px 0 17px;font-size:21px}
+
+.mini-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.mini{
+border:1px solid var(--border);
+background:#ffffffed;
+border-radius:16px;
+padding:18px 14px;
+text-align:left;
+color:var(--text);
+min-height:115px;
+}
+
+.mini:hover{border-color:var(--purple)}
+
+.mini span{display:block;font-size:27px;margin-bottom:10px}
+.mini strong{font-size:13px}
+.mini p{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+#collection{margin-top:20px}
+
+.collection-item{
+padding:15px 0;
+border-bottom:1px solid var(--border);
+}
+
+.collection-item strong{font-size:14px}
+
+.collection-item p{
+font-size:13px;
+line-height:1.6;
+color:var(--muted);
+margin-top:7px;
+}
+
+.source-box{
+margin-top:38px;
+border-top:1px solid var(--border);
+padding-top:22px;
+}
+
+.source-box h2{font-size:17px;margin-bottom:10px}
+
+.source-box p{
+font-size:12px;
+color:var(--muted);
+line-height:1.9;
+}
+
+.source-box a{color:var(--green)}
+
+footer{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+padding:25px;
+}
+
+@media(max-width:760px){
+.stage{grid-template-columns:1fr}
+.mini-grid{grid-template-columns:repeat(2,1fr)}
+header{padding:20px 5%}
+.panel{padding:20px}
+}
+
+@media(max-width:400px){
+.mini-grid{grid-template-columns:1fr}
+.category{padding:10px 12px}
+.logo{font-size:27px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div>
+<div class="logo">✦ SPARKS</div>
+<div class="subtitle">Tiny facts. Big discoveries.</div>
+</div>
+
+<button class="pill" id="favouriteView">
+♡ My Favourites <span id="favCount">0</span>
+</button>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="eyebrow">WELCOME TO YOUR INNER UNIVERSE</div>
+<h1>How much do you know<br>about <span style="color:#267a50">YOU?</span></h1>
+<p>Your brain, body, food and habits hold fascinating secrets.
+Explore one small discovery at a time.</p>
+</section>
+
+<nav class="categories" aria-label="Discovery categories">
+<button class="category active" data-category="All">🌌 All</button>
+<button class="category" data-category="Brain">🧠 Brain</button>
+<button class="category" data-category="Mind">💭 Psychology</button>
+<button class="category" data-category="Food">🍎 Food</button>
+<button class="category" data-category="Body">🫀 Body</button>
+<button class="category" data-category="Habits">🌙 Habits</button>
+</nav>
+
+<section class="stage">
+
+<article class="panel">
+<div class="card-top">
+<div class="label" id="categoryLabel">✦ TODAY'S DISCOVERY</div>
+<button class="fav" id="saveBtn" aria-label="Save favourite" title="Save favourite">♡</button>
+</div>
+
+<div class="icon" id="factIcon">🧠</div>
+<h2 class="fact-title" id="factTitle">Your brain can change as you learn.</h2>
+<p class="fact-body" id="factText"></p>
+
+<div class="explain hidden" id="factExtra"></div>
+
+<div class="action-row">
+<button class="primary" id="nextBtn">✦ Give me a random spark</button>
+<button class="secondary" id="whyBtn">Explain it simply ↓</button>
+</div>
+
+<div class="progress" id="progress"></div>
+</article>
+
+<aside class="side">
+
+<section class="panel">
+<div class="label">🪐 QUICK CHALLENGE</div>
+<h2 style="margin-top:10px">Myth or Fact?</h2>
+<p style="margin-bottom:18px">Choose your answer. The next question appears automatically!</p>
+
+<div class="quiz-question" id="quizQuestion"></div>
+
+<div class="quiz-options">
+<button data-answer="true">✓ Fact</button>
+<button data-answer="false">✕ Myth</button>
+</div>
+
+<p class="quiz-result" id="quizResult" aria-live="polite"></p>
+
+<button class="secondary" id="nextQuiz" style="margin-top:14px;width:100%">
+Skip question →
+</button>
+</section>
+
+<section class="panel">
+<div class="label">✨ WAIT, REALLY?</div>
+<h2 style="margin-top:12px" id="surpriseTitle">Sleep helps learning.</h2>
+<p id="surpriseText"></p>
+<button class="secondary" id="surpriseBtn" style="margin-top:16px">
+Reveal another →
+</button>
+</section>
+
+</aside>
+</section>
+
+<h2 class="section-title">Explore your universe</h2>
+
+<section class="mini-grid">
+<button class="mini" data-pick="Brain"><span>🧠</span><strong>Brain & Memory</strong><p>Learning, sleep and focus</p></button>
+<button class="mini" data-pick="Food"><span>🍎</span><strong>Food Mysteries</strong><p>Nutrients and absorption</p></button>
+<button class="mini" data-pick="Body"><span>🫀</span><strong>Body Secrets</strong><p>What happens inside you</p></button>
+<button class="mini" data-pick="Mind"><span>💭</span><strong>Mind & Habits</strong><p>Attention and behaviour</p></button>
+</section>
+
+<section id="collection" class="panel hidden">
+<div class="card-top">
+<h2 id="collectionTitle">♡ My Favourites</h2>
+<button class="secondary" id="closeCollection">Close ✕</button>
+</div>
+<div id="collectionItems"></div>
+</section>
+
+<section class="source-box">
+<h2>🔬 Explore the science</h2>
+<p>
+Facts are simplified for learning. Explore the original guidance and research:
+<br>
+<a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer">WHO — Healthy Diet</a> ·
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7209921/" target="_blank" rel="noopener noreferrer">Sleep and Brain Plasticity — Research Review</a> ·
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4263505/" target="_blank" rel="noopener noreferrer">Sleep and Memory — Research Review</a>
+</p>
+<p style="margin-top:10px">SPARKS provides general educational information, not personalised medical advice.</p>
+</section>
+
+<a href="{{ url_for('home') }}" style="display:block;text-align:center;color:#267a50;margin-top:25px;text-decoration:none">← Back to Dashboard</a>
+
+</main>
+
+<footer>✦ Keep asking questions. Keep discovering. ✦</footer>
+
+<script>
+const facts=[
+{id:1,c:"Brain",i:"🧠",t:"Your brain can change as you learn.",b:"Learning and practice can change connections between nerve cells.",e:"This ability is called neuroplasticity. Repeated practice can help the brain build and adjust pathways."},
+{id:2,c:"Brain",i:"🌙",t:"Sleep helps your brain remember.",b:"Your brain continues processing what you learned while you sleep.",e:"Sleep supports memory processing. Staying awake all night can make learning and attention harder."},
+{id:3,c:"Brain",i:"🔁",t:"Testing yourself can help you learn.",b:"Trying to recall an answer can strengthen learning.",e:"This is called retrieval practice. Close your notes and try to explain the idea from memory."},
+{id:4,c:"Brain",i:"🎯",t:"Switching tasks has a cost.",b:"Moving repeatedly between tasks can use extra attention.",e:"Try focusing on one task for a short period instead of constantly checking messages."},
+{id:5,c:"Mind",i:"👀",t:"Your brain interprets what you see.",b:"Your experience and expectations can influence how you understand information.",e:"Your brain combines sensory information with context. Two people may interpret the same event differently."},
+{id:6,c:"Mind",i:"🔄",t:"Habits can become more automatic.",b:"Repeating an action in a similar situation can make it easier to do without much thought.",e:"Connecting a new habit to an existing routine can make it easier to practise."},
+{id:7,c:"Mind",i:"💭",t:"A thought is not always a fact.",b:"Thoughts are mental events, and sometimes they are incomplete or mistaken.",e:"Ask yourself: What evidence supports this thought? Is there another reasonable explanation?"},
+{id:8,c:"Mind",i:"🎁",t:"Your brain learns from rewards.",b:"Dopamine is involved in learning, motivation and how the brain responds to rewards.",e:"Dopamine is not simply a happiness chemical. It has several roles in the brain and body."},
+{id:9,c:"Food",i:"🍊",t:"Vitamin C helps your body absorb plant iron.",b:"Vitamin C can improve absorption of iron from foods such as beans and lentils.",e:"Try including vitamin-C-rich foods such as lemon, guava or orange with a suitable meal."},
+{id:10,c:"Food",i:"☕",t:"Tea can affect iron absorption.",b:"Tea compounds can reduce absorption of plant-based iron when consumed with a meal.",e:"If iron intake is a concern, consider drinking tea between meals. Follow your clinician's advice if you have iron deficiency."},
+{id:11,c:"Food",i:"🥤",t:"Fruit juice is not the same as whole fruit.",b:"Juice generally contains less fibre than whole fruit, and its sugars count as free sugars.",e:"Whole fruit is often a useful everyday choice. WHO recommends limiting free sugars."},
+{id:12,c:"Food",i:"🫘",t:"Dal gives you more than protein.",b:"Pulses can provide protein, fibre and several other nutrients.",e:"Lentils, beans and chickpeas are useful options in a varied diet."},
+{id:13,c:"Food",i:"🍯",t:"Honey still counts as free sugar.",b:"Honey may be natural, but its sugars are included in the free-sugar category.",e:"Natural does not mean sugar-free. Amounts and overall eating patterns matter."},
+{id:14,c:"Food",i:"🥗",t:"One food cannot do everything.",b:"Different foods provide different combinations of nutrients.",e:"Variety, balance and suitable portions matter more than searching for one perfect food."},
+{id:15,c:"Body",i:"💪",t:"Your muscles use glucose when they work.",b:"Muscle activity helps your body use glucose from the blood.",e:"Movement can support blood glucose regulation. A short walk after a meal may help many people."},
+{id:16,c:"Body",i:"🦴",t:"Your bones are living tissue.",b:"Bone is continually broken down and rebuilt throughout life.",e:"Physical activity, adequate nutrition and other factors help support bone health."},
+{id:17,c:"Body",i:"💧",t:"You lose water even when you do not sweat.",b:"Your body loses water through breathing, urine and other normal processes.",e:"Fluid needs differ with heat, activity and health."},
+{id:18,c:"Body",i:"❤️",t:"Your heart keeps working while you sleep.",b:"Your heart continues circulating blood while you rest.",e:"Your heart rate and other body processes change during sleep, but your heart keeps doing its job."},
+{id:19,c:"Body",i:"🧂",t:"Too much salt can raise blood pressure.",b:"High sodium intake is linked to increased blood pressure.",e:"WHO recommends adults consume less than 2,000 mg sodium per day, equivalent to less than 5 g of salt."},
+{id:20,c:"Habits",i:"☀️",t:"Daylight helps set your body clock.",b:"Light is an important signal for your body's daily sleep-wake timing.",e:"Getting daylight during the day and keeping a consistent routine can support your body clock."},
+{id:21,c:"Habits",i:"🚶",t:"Short movement breaks can count.",b:"Breaking up long periods of sitting with movement can benefit health.",e:"Stand, stretch or walk briefly between study sessions when practical."},
+{id:22,c:"Habits",i:"🥦",t:"Fruit and vegetables matter every day.",b:"WHO recommends at least 400 g of fruits and vegetables per day for people over 10.",e:"This is a general public-health recommendation, not a strict target for every individual circumstance."},
+{id:23,c:"Habits",i:"📱",t:"Screens can make your eyes feel tired.",b:"Long periods of screen use can contribute to eye strain and discomfort.",e:"Try regular breaks, blink normally and adjust screen brightness and distance for comfort."},
+{id:24,c:"Habits",i:"🛌",t:"A consistent sleep schedule can help.",b:"Your body clock responds to patterns in light, activity and sleep timing.",e:"A reasonably regular bedtime and wake time may make sleep routines easier."},
+{id:25,c:"Mind",i:"🧩",t:"Stress can affect concentration.",b:"Stress can influence attention, working memory and decision-making.",e:"When overwhelmed, pause and break a large task into smaller steps. Effects differ from person to person."}
+];
+
+const quizzes=[
+{q:"Sleep plays a role in memory processing.",a:true,e:"Fact! Sleep supports learning and memory, although it does not guarantee you remember everything."},
+{q:"Honey contains no free sugars because it is natural.",a:false,e:"Myth! WHO includes sugars naturally present in honey in the free-sugar category."},
+{q:"Your brain can change with learning and practice.",a:true,e:"Fact! Neuroplasticity describes the brain's ability to change with experience."},
+{q:"Tea can reduce absorption of plant-based iron from a meal.",a:true,e:"Fact! Compounds in tea can reduce non-haem iron absorption."},
+{q:"Dopamine is only responsible for happiness.",a:false,e:"Myth! Dopamine has several roles, including learning, motivation and reward processing."},
+{q:"All carbohydrates are unhealthy.",a:false,e:"Myth! WHO recommends getting carbohydrates mainly from whole grains, vegetables, fruits and pulses."},
+{q:"Light can affect the body's sleep-wake timing.",a:true,e:"Fact! Light is an important signal for the circadian clock."}
+];
+
+let current=0,quizIndex=0,answered=false,activeCategory="All",quizTimer=null,surpriseSeen=-1;
+let favourites=new Set();
+try{favourites=new Set(JSON.parse(localStorage.getItem("sparksFavourites")||"[]"))}catch(e){favourites=new Set()}
+
+const $=id=>document.getElementById(id);
+
+function filteredFacts(){return facts.filter(f=>activeCategory==="All"||f.c===activeCategory)}
+
+function showFact(index){
+const list=filteredFacts();
+if(!list.length)return;
+current=((index%list.length)+list.length)%list.length;
+const f=list[current];
+$("categoryLabel").textContent="✦ "+f.c.toUpperCase()+" DISCOVERY";
+$("factIcon").textContent=f.i;
+$("factTitle").textContent=f.t;
+$("factText").textContent=f.b;
+$("factExtra").textContent="🔭 The science: "+f.e;
+$("factExtra").classList.add("hidden");
+$("whyBtn").textContent="Explain it simply ↓";
+$("saveBtn").textContent=favourites.has(f.id)?"♥":"♡";
+$("saveBtn").classList.toggle("saved",favourites.has(f.id));
+$("progress").innerHTML=list.map((_,i)=>`<span style="height:5px;flex:1;border-radius:10px;background:${i===current?"#267a50":"#dce9df"}"></span>`).join("");
+}
+
+function randomFact(){
+const list=filteredFacts();
+if(list.length<2){showFact(0);return}
+let n=current;
+while(n===current)n=Math.floor(Math.random()*list.length);
+showFact(n);
+}
+
+function updateFavourites(){
+try{localStorage.setItem("sparksFavourites",JSON.stringify([...favourites]))}catch(e){}
+$("favCount").textContent=favourites.size;
+}
+
+function showCollection(){
+const items=facts.filter(f=>favourites.has(f.id));
+$("collectionItems").innerHTML=items.length?items.map(f=>`<div class="collection-item"><strong>${f.i} ${f.t}</strong><p>${f.b}</p><button class="secondary removeFav" data-id="${f.id}" style="margin-top:8px">Remove</button></div>`).join(""):"<p style='color:var(--muted)'>No favourites yet. Tap ♡ on a discovery to save it.</p>";
+$("collection").classList.remove("hidden");
+$("collectionItems").querySelectorAll(".removeFav").forEach(b=>b.onclick=()=>{
+favourites.delete(Number(b.dataset.id));updateFavourites();showCollection();showFact(current);
+});
+$("collection").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function showQuiz(){
+clearTimeout(quizTimer);
+answered=false;
+$("quizQuestion").textContent=quizzes[quizIndex].q;
+$("quizResult").textContent="";
+document.querySelectorAll(".quiz-options button").forEach(b=>{b.disabled=false;b.style.borderColor=""});
+$("nextQuiz").textContent="Skip question →";
+}
+
+document.querySelectorAll(".quiz-options button").forEach(b=>b.onclick=()=>{
+if(answered)return;
+answered=true;
+const q=quizzes[quizIndex];
+const correct=(b.dataset.answer==="true")===q.a;
+$("quizResult").textContent=(correct?"✨ Correct! ":"💫 Not quite. ")+q.e;
+document.querySelectorAll(".quiz-options button").forEach(btn=>btn.disabled=true);
+$("nextQuiz").textContent="Next now →";
+quizTimer=setTimeout(()=>{
+quizIndex=(quizIndex+1)%quizzes.length;
+showQuiz();
+},2200);
+});
+
+$("nextQuiz").onclick=()=>{
+clearTimeout(quizTimer);
+quizIndex=(quizIndex+1)%quizzes.length;
+showQuiz();
+};
+
+$("nextBtn").onclick=randomFact;
+
+$("whyBtn").onclick=()=>{
+const open=$("factExtra").classList.toggle("hidden")===false;
+$("whyBtn").textContent=open?"Hide explanation ↑":"Explain it simply ↓";
+};
+
+$("saveBtn").onclick=()=>{
+const id=filteredFacts()[current].id;
+favourites.has(id)?favourites.delete(id):favourites.add(id);
+updateFavourites();showFact(current);
+};
+
+$("favouriteView").onclick=showCollection;
+$("closeCollection").onclick=()=>$("collection").classList.add("hidden");
+
+document.querySelectorAll(".category").forEach(b=>b.onclick=()=>{
+activeCategory=b.dataset.category;
+document.querySelectorAll(".category").forEach(x=>x.classList.toggle("active",x===b));
+showFact(0);
+});
+
+document.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{
+activeCategory=b.dataset.pick;
+document.querySelectorAll(".category").forEach(x=>x.classList.toggle("active",x.dataset.category===activeCategory));
+showFact(0);
+window.scrollTo({top:0,behavior:"smooth"});
+});
+
+function newSurprise(){
+let n;
+do{n=Math.floor(Math.random()*facts.length)}while(n===surpriseSeen&&facts.length>1);
+surpriseSeen=n;
+$("surpriseTitle").textContent=facts[n].t;
+$("surpriseText").textContent=facts[n].b;
+}
+
+$("surpriseBtn").onclick=newSurprise;
+
+updateFavourites();
+showFact(0);
+showQuiz();
+newSurprise();
+</script>
+
+</body>
+</html>
+

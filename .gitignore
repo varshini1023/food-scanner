@@ -1,0 +1,45 @@
+# Python virtual environment
+
+venv/
+.venv/
+
+# Python cache files
+
+**pycache**/
+*.py[cod]
+
+# Local databases and user data
+
+instance/
+*.db
+uploads/
+
+# Dataset and model training data
+
+datasets/
+train/
+test/
+validation/
+
+# Large trained models and backups
+
+*.keras
+*.h5
+*.zip
+
+# Local environment secrets
+
+.env
+
+# Generated test reports
+
+batch_test_results.csv
+dataset_quality_report.csv
+duplicate_removal_log.csv
+suspicious_images_report.csv
+
+# Editor and operating system files
+
+.vscode/
+.DS_Store
+Thumbs.db

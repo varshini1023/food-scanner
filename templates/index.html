@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Scanner</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f6;
+            color: #222;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background: #1f7a4d;
+            color: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* NAVIGATION */
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav span {
+            font-size: 14px;
+        }
+
+        .logout {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            color: #1f7a4d;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #555;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* WELCOME MESSAGE */
+        .welcome {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1f7a4d;
+            font-size: 17px;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 20px auto 60px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #1f7a4d;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            padding: 11px 22px;
+            background: #1f7a4d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #155c39;
+            transform: translateY(-1px);
+        }
+
+        /* LOGIN MESSAGE */
+        .login-note {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* INFORMATION SECTION */
+        .info {
+            margin-top: 45px;
+            background: #e8f5ee;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .info h2 {
+            color: #1f7a4d;
+            margin-bottom: 12px;
+        }
+
+        .info p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* LOGIN / REGISTER SECTION */
+        .account-section {
+            margin-top: 35px;
+            text-align: center;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .account-section p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .account-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            background: #1f7a4d;
+            color: white;
+        }
+
+        .register-btn {
+            border: 1px solid #1f7a4d;
+            color: #1f7a4d;
+            background: white;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1f7a4d;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            margin-top: 50px;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 25px;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div>
+            <h1>🍽️ Food Scanner</h1>
+            <p>Understand what you eat</p>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="nav">
+
+            <a href="{{ url_for('about') }}">About Us</a>
+
+            {% if logged_in %}
+
+                <span>Hi, {{ username }}!</span>
+
+                <a href="{{ url_for('logout') }}" class="logout">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h2>Eat Better. Know Better.</h2>
+
+        <p>
+            Food Scanner helps you understand the
+            nutritional value of South Indian foods
+            and make healthier food choices.
+        </p>
+
+    </section>
+
+    <!-- WELCOME MESSAGE -->
+    {% if logged_in %}
+
+        <div class="welcome">
+            Welcome back, <strong>{{ username }}</strong>!
+        </div>
+
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <div class="cards">
+
+            <!-- FOOD SCANNER -->
+            <div class="card">
+
+                <div class="icon">📷</div>
+
+                <h3>Food Scanner</h3>
+
+                <p>
+                    Upload a food image and identify
+                    the South Indian food using our
+                    trained machine learning model.
+                </p>
+
+                <a href="{{ url_for('scanner') }}" class="btn">
+                    Scan Food
+                </a>
+
+                {% if not logged_in %}
+                    <div class="login-note">
+                        Login required
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- BMI -->
+            <div class="card">
+
+                <div class="icon">⚖️</div>
+
+                <h3>BMI &amp; Suggestions</h3>
+
+                <p>
+                    Calculate your BMI and understand
+                    your BMI category with adaptable
+                    health and lifestyle guidance.
+                </p>
+
+                <a href="{{ url_for('bmi') }}" class="btn">
+                    Check BMI
+                </a>
+
+                {% if not logged_in %}
+                    <div class="login-note">
+                        Login required
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- PROTEIN RESOURCES -->
+            <div class="card">
+
+                <div class="icon">🥗</div>
+
+                <h3>Protein Resources</h3>
+
+                <p>
+                    Explore protein-rich foods and
+                    simple ways to improve your
+                    daily nutrition.
+                </p>
+
+                <a href="{{ url_for('protein_foods') }}" class="btn">
+                    Explore
+                </a>
+
+                {% if not logged_in %}
+                    <div class="login-note">
+                        Login required
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <!-- SPARKS -->
+            <div class="card">
+
+                <div class="icon">⚡</div>
+
+                <h3>SPARKS</h3>
+
+                <p>
+                    Discover small, research-backed
+                    lifestyle actions that can create
+                    meaningful health benefits over time.
+                </p>
+
+                <a href="{{ url_for('sparks') }}" class="btn">
+                    Explore SPARKS
+                </a>
+
+                {% if not logged_in %}
+                    <div class="login-note">
+                        Login required
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- INFORMATION SECTION -->
+        <div class="info">
+
+            <h2>Why Food Awareness Matters</h2>
+
+            <p>
+                Knowing what is on your plate can help
+                you make better decisions about calories,
+                protein, carbohydrates, fibre and other
+                nutrients.
+            </p>
+
+        </div>
+
+        <!-- ACCOUNT SECTION -->
+        {% if not logged_in %}
+
+            <div class="account-section">
+
+                <p>
+                    Create an account to access the
+                    Food Scanner, BMI calculator,
+                    Protein Resources and SPARKS.
+                </p>
+
+                <a href="{{ url_for('login') }}"
+                   class="account-btn login-btn">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                   class="account-btn register-btn">
+                    Create Account
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            &copy; 2026 Food Scanner |
+            Healthy choices start with awareness.
+        </p>
+
+    </footer>
+
+</body>
+</html>

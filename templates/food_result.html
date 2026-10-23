@@ -1,0 +1,256 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Scan Result</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f2;
+            color: #263326;
+            padding: 30px 15px;
+        }
+
+        .result-box {
+            background: white;
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-top: 0;
+        }
+
+        .food-image {
+            width: 300px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .detected {
+            background: #e8f5e9;
+            padding: 18px;
+            border-radius: 15px;
+            margin: 10px 0 25px;
+        }
+
+        .detected h2 {
+            margin: 0 0 8px;
+            color: #1b5e20;
+            text-transform: capitalize;
+        }
+
+        .confidence {
+            color: #555;
+            margin: 0;
+        }
+
+        .nutrition-box {
+            margin-top: 20px;
+        }
+
+        .nutrition-box h2 {
+            color: #2e7d32;
+        }
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .nutrition-item {
+            background: #f7f9f5;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .nutrition-item span {
+            display: block;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .nutrition-item strong {
+            font-size: 18px;
+            color: #263326;
+        }
+
+        .suggestion-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: #fff8e1;
+            border-left: 5px solid #f9a825;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .suggestion-box h3 {
+            margin-top: 0;
+            color: #795548;
+        }
+
+        .suggestion-box p {
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .scan-again {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 25px;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .scan-again:hover {
+            background: #1b5e20;
+        }
+
+        @media (max-width: 500px) {
+
+            .result-box {
+                padding: 20px;
+            }
+
+            .nutrition-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .food-image {
+                width: 100%;
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="result-box">
+
+        <h1>🍛 Food Scan Result</h1>
+
+        <p class="subtitle">
+            Here's what our Food Scanner detected
+        </p>
+
+        <img
+            src="{{ url_for('uploaded_file', filename=image_filename) }}"
+            alt="Uploaded Food"
+            class="food-image"
+        >
+
+        <div class="detected">
+
+            <h2>🍽️ {{ predicted_food }}</h2>
+
+            <p class="confidence">
+                Model Confidence: <strong>{{ confidence }}%</strong>
+            </p>
+
+        </div>
+
+        {% if nutrition %}
+
+        <div class="nutrition-box">
+
+            <h2>📊 Nutrition Information</h2>
+
+            <p>
+                <strong>Serving:</strong>
+                {{ nutrition.serving }}
+            </p>
+
+            <div class="nutrition-grid">
+
+                <div class="nutrition-item">
+                    <span>🔥 Calories</span>
+                    <strong>{{ nutrition.calories }} kcal</strong>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>💪 Protein</span>
+                    <strong>{{ nutrition.protein }} g</strong>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🍚 Carbohydrates</span>
+                    <strong>{{ nutrition.carbs }} g</strong>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🥑 Fat</span>
+                    <strong>{{ nutrition.fat }} g</strong>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🌾 Fiber</span>
+                    <strong>{{ nutrition.fiber }} g</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="nutrition-box">
+            <h2>📊 Nutrition Information</h2>
+            <p>Nutrition information is not available for this food.</p>
+        </div>
+
+        {% endif %}
+
+
+        {% if suggestion %}
+
+        <div class="suggestion-box">
+
+            <h3>💡 Healthy Suggestion</h3>
+
+            <p>
+                {{ suggestion }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <a href="{{ url_for('food_scanner') }}" class="scan-again">
+            📷 Scan Another Food
+        </a>
+
+    </div>
+
+</body>
+</html>
+```

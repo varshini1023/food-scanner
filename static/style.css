@@ -1,0 +1,495 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background: #eef2ed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* MAIN PAGE */
+
+.page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+/* LOGIN CARD */
+
+.login-card {
+    width: 420px;
+
+    background: white;
+
+    padding: 45px 45px 35px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(25, 61, 51, 0.15);
+
+    border: 1px solid #e1e6e1;
+}
+
+
+/* LOGO */
+
+.logo {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    background: #193d33;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+}
+
+
+/* TITLE */
+
+h1 {
+    color: #193d33;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+
+.tagline {
+    color: #8a948e;
+
+    font-size: 13px;
+}
+
+
+/* DIVIDER */
+
+.divider {
+    width: 45px;
+    height: 3px;
+
+    background: #d6a84c;
+
+    margin: 28px auto;
+}
+
+
+/* WELCOME */
+
+h2 {
+    color: #263d34;
+
+    font-size: 24px;
+
+    margin-bottom: 7px;
+}
+
+
+.instruction {
+    color: #929a96;
+
+    font-size: 13px;
+
+    margin-bottom: 25px;
+}
+
+
+/* INPUTS */
+
+form {
+    text-align: left;
+}
+
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+
+label {
+    display: block;
+
+    color: #34473e;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+}
+
+
+input {
+    width: 100%;
+    height: 52px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d8ded9;
+
+    border-radius: 11px;
+
+    background: #f9faf8;
+
+    color: #263d34;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+
+input:focus {
+    border-color: #b68c3b;
+
+    background: white;
+
+    box-shadow: 0 0 0 3px rgba(214, 168, 76, 0.15);
+}
+
+
+input::placeholder {
+    color: #a7aeaa;
+}
+
+
+/* BUTTON */
+
+button {
+    width: 100%;
+    height: 53px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #193d33;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+
+button span {
+    color: #d6a84c;
+
+    font-size: 19px;
+
+    margin-left: 8px;
+}
+
+
+button:hover {
+    background: #285448;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(25, 61, 51, 0.18);
+}
+
+
+/* SIGN UP */
+
+.signup {
+    color: #929a96;
+
+    font-size: 12px;
+
+    margin-top: 23px;
+}
+
+
+.signup a {
+    color: #a77b2f;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .login-card {
+        width: 100%;
+
+        padding: 35px 25px 30px;
+    }
+
+}
+
+/* =========================
+   BMI PAGE
+========================= */
+
+.bmi-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(214, 168, 76, 0.15),
+            transparent 30%
+        ),
+        #eef2ed;
+}
+
+
+.bmi-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(25, 61, 51, 0.13);
+}
+
+
+.bmi-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: #193d33;
+
+    font-size: 27px;
+}
+
+
+.bmi-label {
+    color: #b1873a;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+
+.bmi-card h1 {
+    color: #193d33;
+
+    font-size: 28px;
+
+    margin-bottom: 5px;
+}
+
+
+.bmi-subtitle {
+    color: #8b948f;
+
+    font-size: 13px;
+
+    margin-bottom: 28px;
+}
+
+
+.bmi-card form {
+    text-align: left;
+}
+
+
+.bmi-card label {
+    display: block;
+
+    color: #35463e;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin: 17px 0 8px;
+}
+
+
+.bmi-card input {
+    width: 100%;
+
+    height: 50px;
+
+    border: 1px solid #d8ded9;
+
+    border-radius: 10px;
+
+    padding: 0 14px;
+
+    background: #fafbf9;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+
+.bmi-card input:focus {
+    border-color: #b68c3b;
+
+    box-shadow:
+        0 0 0 3px rgba(214, 168, 76, 0.12);
+}
+
+
+.height-row {
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.height-row input {
+    width: 50%;
+}
+
+
+.bmi-card button {
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 25px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #193d33;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.bmi-card button:hover {
+    background: #285448;
+}
+
+
+/* RESULT */
+
+.bmi-result {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    background: #edf3ed;
+}
+
+
+.bmi-result p {
+    color: #718078;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+.bmi-result h2 {
+    color: #193d33;
+
+    font-size: 42px;
+
+    margin: 5px 0 10px;
+}
+.bmi-result span {
+    display: inline-block;
+
+    padding: 6px 13px;
+
+    border-radius: 20px;
+
+    background: #d6a84c;
+
+    color: #193d33;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+/* NUTRITION DISCLAIMER */
+
+.nutrition-note {
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+    margin-top: 12px;
+    line-height: 1.5;
+}

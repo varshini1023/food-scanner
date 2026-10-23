@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BMI & Health Guide</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7f6;
+            margin: 0;
+            color: #333;
+        }
+
+        header {
+            background: #1f7a4d;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 700px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1f7a4d;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #1f7a4d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #155c38;
+        }
+
+        /* RESULT */
+
+        .result {
+            margin-top: 25px;
+            padding: 25px;
+            background: #e8f5ee;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .bmi-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1f7a4d;
+            margin: 10px 0;
+        }
+
+        .category {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* CATEGORY GUIDE */
+
+        .guide {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .guide h3 {
+            color: #1f7a4d;
+            margin-bottom: 8px;
+        }
+
+        .guide p {
+            line-height: 1.6;
+        }
+
+        .guide ul {
+            line-height: 1.8;
+            padding-left: 22px;
+        }
+
+        .tip-box {
+            background: #f5faf6;
+            border-left: 5px solid #1f7a4d;
+            padding: 15px;
+            margin-top: 18px;
+            border-radius: 8px;
+        }
+
+        /* BMI SCALE */
+
+        .scale {
+            margin-top: 25px;
+        }
+
+        .scale h3 {
+            color: #1f7a4d;
+        }
+
+        .scale-item {
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .under {
+            background: #fff3cd;
+        }
+
+        .normal {
+            background: #dff3e5;
+        }
+
+        .over {
+            background: #ffe8c2;
+        }
+
+        .obese {
+            background: #ffdede;
+        }
+
+        /* REALITY CHECK */
+
+        .reality {
+            background: #fffdf2;
+            border: 1px solid #eee2a8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .reality h3 {
+            margin-top: 0;
+            color: #7a641f;
+        }
+
+        .reality p {
+            line-height: 1.6;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #c62828;
+            text-align: center;
+        }
+
+        .back {
+            display: block;
+            margin: 25px 0 40px;
+            text-align: center;
+            color: #1f7a4d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>⚖️ BMI & Health Guide</h1>
+
+    <p>
+        Understand your BMI and build healthier habits
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- BMI CALCULATOR -->
+
+    <div class="card">
+
+        <h2>
+            Calculate Your BMI
+        </h2>
+
+        <form method="POST">
+
+            <label>
+                Height (feet)
+            </label>
+
+            <input
+                type="number"
+                name="height"
+                step="0.01"
+                min="0"
+                placeholder="Example: 5.3"
+                required
+            >
+
+            <label>
+                Weight (kg)
+            </label>
+
+            <input
+                type="number"
+                name="weight"
+                step="0.1"
+                min="0"
+                placeholder="Example: 50"
+                required
+            >
+
+            <button type="submit">
+                Calculate BMI
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        {% if bmi is not none %}
+
+        <div class="result">
+
+            <h2>
+                Your BMI
+            </h2>
+
+            <div class="bmi-number">
+                {{ bmi }}
+            </div>
+
+            <div class="category">
+                {{ category }}
+            </div>
+
+
+            {% if suggestion %}
+
+            <div class="guide">
+
+                <h3>
+                    🌱 What you can focus on
+                </h3>
+
+                <p>
+                    {{ suggestion }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- BMI SCALE -->
+
+    <div class="card scale">
+
+        <h2>
+            📊 Understanding BMI
+        </h2>
+
+        <div class="scale-item under">
+            Below 18.5 → Underweight
+        </div>
+
+        <div class="scale-item normal">
+            18.5 – 24.9 → Healthy weight
+        </div>
+
+        <div class="scale-item over">
+            25.0 – 29.9 → Overweight
+        </div>
+
+        <div class="scale-item obese">
+            30.0 and above → Obesity
+        </div>
+
+    </div>
+
+
+    <!-- ADAPTABLE HABITS -->
+
+    <div class="card">
+
+        <h2>
+            🥗 Make It Adaptable
+        </h2>
+
+
+        <div class="guide">
+
+            <h3>
+                🍽️ Build your plate
+            </h3>
+
+            <p>
+                Instead of completely changing your diet,
+                improve the balance of foods you already eat.
+            </p>
+
+            <ul>
+
+                <li>
+                    Add vegetables or greens to main meals.
+                </li>
+
+                <li>
+                    Include a protein source such as dal,
+                    beans, pulses, paneer, milk or other suitable
+                    protein-rich foods.
+                </li>
+
+                <li>
+                    Prefer whole grains and minimally processed
+                    foods more often.
+                </li>
+
+                <li>
+                    Include different fruits and vegetables
+                    throughout the week.
+                </li>
+
+            </ul>
+
+
+            <h3>
+                💪 Don't ignore protein
+            </h3>
+
+            <p>
+                Protein helps provide the building blocks needed
+                for muscles and other body functions. It can come
+                from both plant and animal sources.
+            </p>
+
+
+            <h3>
+                🌾 Think about fiber
+            </h3>
+
+            <p>
+                Pulses, vegetables, fruits and whole grains are
+                useful sources of dietary fiber. WHO recommends
+                adults and children over 10 aim for at least
+                25 g of naturally occurring dietary fiber per day.
+            </p>
+
+
+            <h3>
+                🚶 Movement matters
+            </h3>
+
+            <p>
+                You don't need to start with an extreme workout.
+                Walking, cycling, household activity, sports and
+                structured exercise can all contribute to physical
+                activity. WHO recommends adults get at least
+                150 minutes of moderate-intensity physical activity
+                per week.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- REALITY CHECK -->
+
+    <div class="reality">
+
+        <h3>
+            🧠 Reality Check
+        </h3>
+
+        <p>
+            BMI is useful for screening, but it does not tell the
+            complete story about your health.
+        </p>
+
+        <p>
+            BMI does not directly measure body fat and cannot
+            distinguish between muscle, fat and bone. Your health
+            picture also involves factors such as physical activity,
+            diet, blood pressure, cholesterol, medical history and
+            overall wellbeing.
+        </p>
+
+        <p>
+            So don't treat one BMI number as a judgment about your
+            body. Use it as one piece of information and look at
+            your habits and health over time.
+        </p>
+
+    </div>
+
+
+    <p class="note">
+
+        <strong>Note:</strong>
+        This calculator is intended for adults and provides
+        general educational information. BMI is a screening
+        measure and is not a diagnosis. If you have concerns
+        about your weight or health, consult a qualified
+        healthcare professional.
+
+    </p>
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+</body>
+
+</html>

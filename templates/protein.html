@@ -1,0 +1,542 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Protein Resources | Food Scanner</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f8f5;
+            color: #333;
+        }
+
+        /* Navigation */
+
+        nav {
+            background: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Main */
+
+        .container {
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .heading p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Search */
+
+        .search-box {
+            max-width: 500px;
+            margin: 25px auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* Filters */
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .filter-btn {
+            padding: 10px 17px;
+            border: none;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* Table */
+
+        .table-container {
+            background: white;
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #4caf50;
+            color: white;
+            padding: 16px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f7fbf5;
+        }
+
+        .protein-value {
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        /* Information */
+
+        .info {
+            background: white;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .info h2 {
+            margin-bottom: 12px;
+        }
+
+        .info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .source {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+            th,
+            td {
+                padding: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <div class="logo">
+            🍽️ Food Scanner
+        </div>
+
+        <a href="/">
+            Dashboard
+        </a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- Heading -->
+
+        <div class="heading">
+
+            <h1>🥗 Protein Resources</h1>
+
+            <p>
+                Explore vegetarian foods and their approximate
+                protein content per 100 g.
+            </p>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for a food..."
+                onkeyup="searchFood()"
+            >
+
+        </div>
+
+
+        <!-- Filters -->
+
+        <div class="filters">
+
+            <button class="filter-btn"
+                    onclick="filterFood('All')">
+                All
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterFood('Pulses')">
+                Pulses
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterFood('Nuts & Seeds')">
+                Nuts & Seeds
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterFood('Vegetables')">
+                Vegetables
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterFood('Fruits')">
+                Fruits
+            </button>
+
+        </div>
+
+
+        <!-- Table -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Food</th>
+                        <th>Category</th>
+                        <th>Protein / 100 g</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="foodTable">
+
+
+                    <tr data-category="Pulses">
+                        <td>Soybean</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">36.5 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Bengal Gram (Chana)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">18.8 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Green Gram (Moong)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">23.9 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Black Gram (Urad)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">24.0 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Red Gram (Toor Dal)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">21.7 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Lentils</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">24.6 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Kidney Beans (Rajma)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">23.4 g</td>
+                    </tr>
+
+                    <tr data-category="Pulses">
+                        <td>Cowpea (Alasande)</td>
+                        <td>Pulses</td>
+                        <td class="protein-value">24.0 g</td>
+                    </tr>
+
+
+                    <tr data-category="Nuts & Seeds">
+                        <td>Groundnut</td>
+                        <td>Nuts & Seeds</td>
+                        <td class="protein-value">25.3 g</td>
+                    </tr>
+
+                    <tr data-category="Nuts & Seeds">
+                        <td>Almond</td>
+                        <td>Nuts & Seeds</td>
+                        <td class="protein-value">21.2 g</td>
+                    </tr>
+
+                    <tr data-category="Nuts & Seeds">
+                        <td>Cashew</td>
+                        <td>Nuts & Seeds</td>
+                        <td class="protein-value">18.2 g</td>
+                    </tr>
+
+                    <tr data-category="Nuts & Seeds">
+                        <td>Sesame (Gingelly)</td>
+                        <td>Nuts & Seeds</td>
+                        <td class="protein-value">18.3 g</td>
+                    </tr>
+
+                    <tr data-category="Nuts & Seeds">
+                        <td>Pumpkin Seeds</td>
+                        <td>Nuts & Seeds</td>
+                        <td class="protein-value">30.0 g</td>
+                    </tr>
+
+
+                    <tr data-category="Vegetables">
+                        <td>Green Peas</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">5.4 g</td>
+                    </tr>
+
+                    <tr data-category="Vegetables">
+                        <td>Drumstick Leaves</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">6.7 g</td>
+                    </tr>
+
+                    <tr data-category="Vegetables">
+                        <td>Spinach</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">2.9 g</td>
+                    </tr>
+
+                    <tr data-category="Vegetables">
+                        <td>Amaranth Leaves</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">4.0 g</td>
+                    </tr>
+
+                    <tr data-category="Vegetables">
+                        <td>Broccoli</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">2.8 g</td>
+                    </tr>
+
+                    <tr data-category="Vegetables">
+                        <td>Mushroom</td>
+                        <td>Vegetables</td>
+                        <td class="protein-value">3.1 g</td>
+                    </tr>
+
+
+                    <tr data-category="Fruits">
+                        <td>Guava</td>
+                        <td>Fruits</td>
+                        <td class="protein-value">2.6 g</td>
+                    </tr>
+
+                    <tr data-category="Fruits">
+                        <td>Jackfruit</td>
+                        <td>Fruits</td>
+                        <td class="protein-value">1.7 g</td>
+                    </tr>
+
+                    <tr data-category="Fruits">
+                        <td>Avocado</td>
+                        <td>Fruits</td>
+                        <td class="protein-value">2.0 g</td>
+                    </tr>
+
+                    <tr data-category="Fruits">
+                        <td>Banana</td>
+                        <td class="Fruits">Fruits</td>
+                        <td class="protein-value">1.1 g</td>
+                    </tr>
+
+                    <tr data-category="Fruits">
+                        <td>Pomegranate</td>
+                        <td>Fruits</td>
+                        <td class="protein-value">1.7 g</td>
+                    </tr>
+
+                    <tr data-category="Fruits">
+                        <td>Papaya</td>
+                        <td>Fruits</td>
+                        <td class="protein-value">0.6 g</td>
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Information -->
+
+        <div class="info">
+
+            <h2>💡 About the values</h2>
+
+            <p>
+                Protein values are shown per 100 g of food.
+                Values can vary depending on variety,
+                preparation method and moisture content.
+            </p>
+
+            <p class="source">
+                Reference: Indian Food Composition Tables
+                (IFCT 2017), ICMR - National Institute
+                of Nutrition.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        function filterFood(category) {
+
+            let rows = document.querySelectorAll(
+                "#foodTable tr"
+            );
+
+            rows.forEach(function(row) {
+
+                if (
+                    category === "All" ||
+                    row.getAttribute("data-category") === category
+                ) {
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        function searchFood() {
+
+            let input =
+                document.getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+            let rows =
+                document.querySelectorAll("#foodTable tr");
+
+
+            rows.forEach(function(row) {
+
+                let food =
+                    row.cells[0].textContent.toLowerCase();
+
+                if (food.includes(input)) {
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```

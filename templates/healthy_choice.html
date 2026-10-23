@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Healthy Choices | Food Scanner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8f3;
+            color: #263326;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #2f6b45;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            color: #2f6b45;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        /* FOOD CARDS */
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 15px;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .food-card h3 {
+            text-align: center;
+            color: #2f6b45;
+            margin-bottom: 15px;
+            font-size: 21px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .food-option {
+            text-align: center;
+        }
+
+        .food-option img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .food-option h4 {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .normal {
+            color: #777;
+        }
+
+        .protein {
+            color: #2f6b45;
+        }
+
+        .arrow {
+            text-align: center;
+            margin-top: 15px;
+            padding: 8px;
+            background: #edf6ee;
+            border-radius: 8px;
+            color: #2f6b45;
+            font-weight: bold;
+        }
+
+        /* EXERCISE SECTION */
+
+        .exercise-section {
+            margin-top: 60px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .exercise-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+            transition: transform 0.2s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .exercise-number {
+            width: 35px;
+            height: 35px;
+            background: #2f6b45;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .exercise-card p {
+            line-height: 1.5;
+            color: #444;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            background: #2f6b45;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .food-option img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌱 Healthy Choices</h1>
+    <p>Small changes can make your everyday meals better</p>
+</header>
+
+
+<div class="container">
+
+    <!-- FOOD SECTION -->
+
+    <div class="section-title">
+        <h2>🍱 Make Your Meal More Protein-Rich</h2>
+        <p>See how simple additions can increase the protein content of familiar foods.</p>
+    </div>
+
+
+    <div class="food-grid">
+
+        <!-- 1 -->
+
+        <div class="food-card">
+            <h3>🫓 Chapati</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="normal">Chapati</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7">
+                    <h4 class="protein">Chapati + Paneer</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein source
+            </div>
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="food-card">
+            <h3>🥞 Dosa</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976">
+                    <h4 class="normal">Plain Dosa</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976">
+                    <h4 class="protein">Dosa + Sambar</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein-rich side
+            </div>
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="food-card">
+            <h3>🍚 Idli</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc">
+                    <h4 class="normal">Idli + Chutney</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Idli + Sambar</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add dal-based sambar
+            </div>
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="food-card">
+            <h3>🍛 Pongal</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="normal">Pongal</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Pongal + Sambar</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein-rich side
+            </div>
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="food-card">
+            <h3>🍋 Lemon Rice</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Lemon Rice</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="protein">Lemon Rice + Peanuts</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add peanuts or a legume side
+            </div>
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="food-card">
+            <h3>🥣 Upma</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="normal">Plain Upma</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Upma + Peanuts</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add nuts or sprouts
+            </div>
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="food-card">
+            <h3>🍚 Bisi Bele Bath</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Bisi Bele Bath</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="protein">Bisi Bele Bath + Extra Dal</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Include more dal
+            </div>
+        </div>
+
+
+        <!-- 8 -->
+
+        <div class="food-card">
+            <h3>🍚 Puliyogare</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Puliyogare</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="protein">Puliyogare + Peanuts</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add peanuts or dal
+            </div>
+        </div>
+
+
+        <!-- 9 -->
+
+        <div class="food-card">
+            <h3>🥣 Curd Rice</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Curd Rice</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="protein">Curd Rice + Sprouts</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein-rich side
+            </div>
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="food-card">
+            <h3>🥔 Poori</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7">
+                    <h4 class="normal">Poori + Potato</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Poori + Chana</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add chickpeas
+            </div>
+        </div>
+
+
+        <!-- 11 -->
+
+        <div class="food-card">
+            <h3>🌾 Ragi Mudde</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Ragi Mudde</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Ragi Mudde + Sambar</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Pair with dal-based dishes
+            </div>
+        </div>
+
+
+        <!-- 12 -->
+
+        <div class="food-card">
+            <h3>🍳 Masala Dosa</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976">
+                    <h4 class="normal">Masala Dosa</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Masala Dosa + Sambar</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein-rich side
+            </div>
+        </div>
+
+
+        <!-- 13 -->
+
+        <div class="food-card">
+            <h3>🥗 Vegetable Rice</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Vegetable Rice</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7">
+                    <h4 class="protein">Rice + Paneer</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add paneer or legumes
+            </div>
+        </div>
+
+
+        <!-- 14 -->
+
+        <div class="food-card">
+            <h3>🍚 Rice + Rasam</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1596560548464-f010549b84d7">
+                    <h4 class="normal">Rice + Rasam</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+                    <h4 class="protein">Rice + Rasam + Dal</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add dal or legumes
+            </div>
+        </div>
+
+
+        <!-- 15 -->
+
+        <div class="food-card">
+            <h3>🥗 Vegetable Meal</h3>
+
+            <div class="comparison">
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1547592180-85f173990554">
+                    <h4 class="normal">Vegetables + Rice</h4>
+                </div>
+
+                <div class="food-option">
+                    <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7">
+                    <h4 class="protein">Vegetables + Paneer</h4>
+                </div>
+
+            </div>
+
+            <div class="arrow">
+                ➜ Add a protein source
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- EXERCISE -->
+
+    <div class="exercise-section">
+
+        <div class="section-title">
+            <h2>🏃 15 Simple Exercise Facts</h2>
+            <p>Small amounts of movement can be part of a healthy lifestyle.</p>
+        </div>
+
+
+        <div class="exercise-grid">
+
+            <div class="exercise-card">
+                <div class="exercise-number">1</div>
+                <p>🚶 A short walk is still physical activity.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">2</div>
+                <p>🧠 Physical activity can temporarily improve attention and executive function.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">3</div>
+                <p>❤️ Regular physical activity supports cardiovascular health.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">4</div>
+                <p>🦴 Weight-bearing activities help support bone health.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">5</div>
+                <p>💪 Strength exercises help maintain muscle strength.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">6</div>
+                <p>😴 Regular physical activity is associated with better sleep.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">7</div>
+                <p>😊 Physical activity can help improve mood.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">8</div>
+                <p>🪑 Breaking up long periods of sitting with movement is beneficial.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">9</div>
+                <p>🚶 Walking is an easy way to add movement to your day.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">10</div>
+                <p>🏃 You don't need a gym to be physically active.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">11</div>
+                <p>🧠 Regular physical activity is associated with long-term brain health.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">12</div>
+                <p>💪 Consistency is important for maintaining physical fitness.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">13</div>
+                <p>🏋️ Resistance exercise can help preserve muscle as you age.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">14</div>
+                <p>🌳 Everyday activities such as walking can contribute to physical activity.</p>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-number">15</div>
+                <p>⏱️ Even small amounts of activity can contribute to your overall activity level.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <p>🌱 Food Scanner — Eat Better • Move More • Live Better</p>
+</footer>
+
+</body>
+</html>
