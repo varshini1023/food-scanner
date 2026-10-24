@@ -217,7 +217,7 @@ def predict_food(image_path):
         image_array = np.array(image).astype("float32")
         image_array = np.expand_dims(image_array, axis=0)
 
-        predictions = model.predict(image_array, verbose=0)[0]
+        predictions = model(image_array, training=False).numpy()[0] 
 
         # Find the two highest prediction scores
         sorted_indices = np.argsort(predictions)[::-1]
