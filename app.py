@@ -6,6 +6,9 @@ from werkzeug.utils import secure_filename
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+# Limit TensorFlow threads on the hosting server
+tf.config.threading.set_intra_op_parallelism_threads(1)
+tf.config.threading.set_inter_op_parallelism_threads(1)
 
 
 # =========================================================
