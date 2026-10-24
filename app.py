@@ -416,9 +416,12 @@ def scanner():
         file.save(image_path)
 
         # Predict food
-        prediction, confidence, probabilities = predict_food(
-            image_path
-        )
+        # Predict food
+        print("DEBUG: Starting food prediction...", flush=True)
+
+        prediction, confidence, probabilities = predict_food(image_path)
+
+        print("DEBUG: Food prediction finished.", flush=True)
 
         # If prediction failed
         if prediction is None:
