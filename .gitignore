@@ -1,4 +1,4 @@
-# Python virtual environment
+# Python virtual environments
 
 venv/
 .venv/
@@ -27,9 +27,14 @@ validation/
 *.h5
 *.zip
 
+# Keep the production V4 model available in Git
+
+!food_classifier_v4.keras
+
 # Local environment secrets
 
 .env
+.env.*
 
 # Generated test reports
 
