@@ -17,9 +17,7 @@ tf.config.threading.set_inter_op_parallelism_threads(1)
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get("SECRET_KEY")
-if not app.secret_key:
-    raise RuntimeError("SECRET_KEY environment variable is not set.")
+app.secret_key = os.environ.get("SECRET_KEY") or "foodscanner-local-dev-key"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,13 +25,19 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # =========================================================
 # DATABASE SETUP
 # =========================================================
+database_url = os.environ.get("DATABASE_URL")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "sqlite:///" + os.path.join(BASE_DIR, "foodscanner.db")
-)
+if database_url:
+    database_url = database_url.replace(
+        "postgresql://", "postgresql+psycopg://", 1
+    )
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        "sqlite:///" + os.path.join(BASE_DIR, "foodscanner.db")
+    )
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 db = SQLAlchemy(app)
 
 
@@ -58,12 +62,39 @@ class User(db.Model):
 
     username = db.Column(db.String(100), unique=True, nullable=False)
 
+    email=db.Column(db.String(254),unique=True,nullable=True)
+
     password = db.Column(db.String(200), nullable=False)
 
 
 # Create database
 with app.app_context():
     db.create_all()
+
+    from sqlalchemy import inspect, text
+
+    inspector = inspect(db.engine)
+
+    user_columns = [
+        column["name"]
+        for column in inspector.get_columns("user")
+    ]
+
+    if "email" not in user_columns:
+        with db.engine.begin() as connection:
+            connection.execute(
+                text("ALTER TABLE user ADD COLUMN email VARCHAR(254)")
+            )
+
+    # Create a unique email index for existing SQLite databases.
+    if db.engine.dialect.name == "sqlite":
+        with db.engine.begin() as connection:
+            connection.execute(
+                text(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS "
+                    "uq_user_email ON user(email)"
+                )
+            )
 
 
 # =========================================================
@@ -213,14 +244,19 @@ def login_required():
 # FOOD PREDICTION FUNCTION
 # =========================================================
 def predict_food(image_path):
+    image = None
+    image_array = None
+    predictions = None
+
     try:
         image = Image.open(image_path).convert("RGB")
+
         image = image.resize((180, 180))
 
-        image_array = np.array(image).astype("float32")
+        image_array = np.asarray(image, dtype=np.float32)
         image_array = np.expand_dims(image_array, axis=0)
 
-        predictions = model(image_array, training=False).numpy()[0] 
+        predictions = model(image_array, training=False).numpy()[0]
 
         # Find the two highest prediction scores
         sorted_indices = np.argsort(predictions)[::-1]
@@ -241,15 +277,22 @@ def predict_food(image_path):
             confidence < CONFIDENCE_THRESHOLD
             or prediction_margin < MARGIN_THRESHOLD
         ):
-            return None, confidence, predictions
+            return None, confidence, None
 
         predicted_food = CLASS_NAMES[predicted_index]
 
-        return predicted_food, confidence, predictions
+        return predicted_food, confidence, None
 
     except Exception as e:
-        print("Prediction error:", e)
+        print("Prediction error:", e, flush=True)
         return None, 0, None
+
+    finally:
+        if image is not None:
+            image.close()
+
+        del image_array
+        del predictions
 
 
 # =========================================================
@@ -279,42 +322,37 @@ def register():
 
     if request.method == "POST":
 
-        username = request.form.get("username")
-        password = request.form.get("password")
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
 
-        if not username or not password:
-
+        if not email or not password:
             return render_template(
                 "register.html",
-                error="Please enter username and password."
+                error="Please enter email and password."
             )
 
-        existing_user = User.query.filter_by(
-            username=username
-        ).first()
+        existing_user = User.query.filter_by(email=email).first()
 
         if existing_user:
-
             return render_template(
                 "register.html",
-                error="Username already exists."
+                error="Email already registered. Please login."
             )
 
         hashed_password = generate_password_hash(password)
 
         new_user = User(
-            username=username,
+            username=email,
+            email=email,
             password=hashed_password
         )
 
         db.session.add(new_user)
-
         db.session.commit()
 
         return redirect(url_for("login"))
 
     return render_template("register.html")
-
 
 # =========================================================
 # LOGIN
@@ -325,29 +363,24 @@ def login():
 
     if request.method == "POST":
 
-        username = request.form.get("username")
-        password = request.form.get("password")
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
 
-        user = User.query.filter_by(
-            username=username
-        ).first()
+        user = User.query.filter_by(email=email).first()
 
-        if user and check_password_hash(
-            user.password,
-            password
-        ):
+        if user and check_password_hash(user.password, password):
 
             session["username"] = user.username
+            session["email"] = user.email
 
             return redirect(url_for("home"))
 
         return render_template(
             "login.html",
-            error="Invalid username or password."
+            error="Invalid email or password."
         )
 
     return render_template("login.html")
-
 
 # =========================================================
 # LOGOUT
